@@ -1,0 +1,65 @@
+//p5.js code
+let paddleWidth = 100;
+let paddleHeight = 20;
+let paddleX;
+let paddleY;
+
+let ballRadius = 10;
+let ballX;
+let ballY;
+let ballSpeedX;
+let ballSpeedY;
+
+function setup() {
+  createCanvas(800, 600);
+  paddleX = width / 2 - paddleWidth / 2;
+  paddleY = height - paddleHeight - 10;
+  
+  ballX = random(ballRadius, width - ballRadius);
+  ballY = random(ballRadius, height / 2);
+  ballSpeedX = 3;
+  ballSpeedY = 3;
+}
+
+function draw() {
+  background(0);
+  
+  // Draw the paddle
+  fill(255);
+  rect(paddleX, paddleY, paddleWidth, paddleHeight);
+  
+  // Move the paddle
+  if (keyIsDown(LEFT_ARROW) && paddleX > 0) {
+    paddleX -= 5;
+  }
+  
+  if (keyIsDown(RIGHT_ARROW) && paddleX < width - paddleWidth) {
+    paddleX += 5;
+  }
+  
+  // Draw the ball
+  fill(255);
+  ellipse(ballX, ballY, ballRadius * 2);
+  
+  // Move the ball
+  ballX += ballSpeedX;
+  ballY += ballSpeedY;
+  
+  // Check ball collision with walls
+  if (ballX + ballRadius >= width || ballX - ballRadius <= 0) {
+    ballSpeedX *= -1;
+  }
+  
+  if (ballY - ballRadius <= 0) {
+    ballSpeedY *= -1;
+  }
+  
+  // Check ball collision with paddle
+  if (ballY + ballRadius >= paddleY && ballX >= paddleX && ballX <= paddleX + paddleWidth) {
+    ballSpeedY *= -1;
+  }
+  
+
+textSize(40)
+  text("Ball",200,50)
+}
